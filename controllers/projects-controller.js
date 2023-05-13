@@ -14,8 +14,11 @@ async function mobilePage(req, res) {
     const projects = await model.getProjects(filter);
     
     let html = '<h1 class="text-center">Proyectos Mobile</h1>'
+    //hasta acá funciona
 
     html += '<ul class="d-flex justify-content-around list-unstyled flex-wrap">'
+    
+    //acá ya no funciona
     projects.forEach(project => {
         html += `<li class="col-5 w-40 mx-auto my-2">
         <div class="card">
