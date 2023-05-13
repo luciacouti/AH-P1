@@ -3,6 +3,25 @@ import { MongoClient, ObjectId } from 'mongodb'
 const client = new MongoClient('mongodb://localhost:27017') 
 const db = client.db('AH20231CP1')
 
+// const MongoClient = require('mongodb').MongoClient;
+const uri = 'mongodb://localhost:27017';
+
+async function createTextIndex() {
+  try {
+    await client.connect();
+    const collection = client.db('AH20231CP1').collection('Projects');
+    await collection.createIndex({ descripcion: 'text' });
+    console.log('Text index created successfully');
+  } catch (error) {
+    console.error('Error creating text index:', error);
+  } finally {
+    await client.close();
+  }
+}
+
+createTextIndex();
+
+
 async function  getProjects( filter = {}) {
     const filterMongo = { deleted: { $ne: true }}
     
