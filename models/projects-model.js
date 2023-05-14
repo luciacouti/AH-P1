@@ -14,34 +14,38 @@ async function createTextIndex() {
     console.log('Text index created successfully');
   } catch (error) {
     console.error('Error creating text index:', error);
-  } finally {
-    await client.close();
+  // } finally {
+  //   await client.close();
   }
 }
 
 createTextIndex();
 
 
-async function  getProjects( filter = {}) {
-    const filterMongo = { deleted: { $ne: true }}
-    
 
-    if(filter?.section) {
-        filterMongo.$text = {$search: filter.section}
-    }
+async function getProjects(filter = {}) {
+ const filterMongo = { deleted: { $ne: true } };
 
-    if(filter?.tech) {
-        filterMongo.technologies = { $in: [filter.tech] };
-    }
+ if (filter?.section) {
+   filterMongo.section = filter.section;
+ }
 
-    if (filter?.clientId) {
-        filterMongo.clientId = filter.clientId;
-    }
+ if (filter?.tech) {
+   filterMongo.technologies = { $in: [filter.tech] };
+ }
 
-    await client.connect()
+ if (filter?.clientId) {
+   filterMongo.clientId = filter.clientId;
+ }
 
-    return db.collection('Projects').find(filterMongo).toArray()
+ await client.connect();
+
+ return db.collection("Projects").find(filterMongo).toArray();
 }
+
+
+
+
 
 async function createProject(project){
     await client.connect()

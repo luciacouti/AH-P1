@@ -11,7 +11,10 @@ function getProjects (req, res) {
             } else {
                 res.status(200).json(projects)
             }
+            console.log("El valor de filter es: ", filter)
         })
+
+        console.log("El valor de filter es: ", filter)
 }
 
 function getProjectsByCliente (req, res) {
